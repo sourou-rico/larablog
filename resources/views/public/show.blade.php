@@ -24,52 +24,5 @@
         </div>
     </div>
 
-    <!-- Section des commentaires -->
-    <div class="mt-8">
-        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Commentaires</h3>
-
-        <!-- Formulaire pour ajouter un commentaire -->
-        @auth
-            <form action="{{ route('comments.store', $article->id) }}" method="POST" class="mb-6">
-                @csrf
-                <div class="mb-4">
-                    <textarea name="content" rows="3" class="w-full rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600" placeholder="Votre commentaire..."></textarea>
-                </div>
-                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg">
-                    Publier
-                </button>
-            </form>
-        @else
-            <p class="text-gray-600 dark:text-gray-400 mb-4">
-                <a href="{{ route('login') }}" class="text-indigo-600 hover:text-indigo-500">Connectez-vous</a> pour laisser un commentaire.
-            </p>
-        @endauth
-
-        <!-- Liste des commentaires -->
-        <div class="space-y-4">
-            @forelse($article->comments as $comment)
-                <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-                    <div class="flex items-start space-x-4">
-                        <div class="flex-1">
-                            <div class="flex items-center justify-between">
-                                <h4 class="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                                    {{ $comment->user->name }}
-                                </h4>
-                                <span class="text-xs text-gray-500">
-                                    {{ $comment->created_at->format('d/m/Y H:i') }}
-                                </span>
-                            </div>
-                            <p class="mt-2 text-gray-700 dark:text-gray-300">
-                                {{ $comment->content }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            @empty
-                <p class="text-gray-500 dark:text-gray-400 text-center py-4">
-                    Aucun commentaire pour le moment. Soyez le premier à commenter !
-                </p>
-            @endforelse
-        </div>
-    </div>
+    
 </x-guest-layout>
