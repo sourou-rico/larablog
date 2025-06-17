@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -15,6 +16,7 @@ Route::get('/', function () {
 Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
 
 
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -27,9 +29,10 @@ Route::middleware('auth')->group(function () {
 
     // Route::get('/articles/{article}/remove', [UserController::class, 'remove'])->name('articles.remove');
     Route::delete('/articles/{article}', [UserController::class, 'remove'])->name('articles.remove');
-
-
 });
 
 
 require __DIR__.'/auth.php';
+
+Route::get('/{user}', [PublicController::class, 'index'])->name('public.index');
+Route::get('/{user}/{article}', [PublicController::class, 'show'])->name('public.show');
