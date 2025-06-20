@@ -43,6 +43,9 @@ public function show(User $user, Article $article)
     ]);
 }
 
-
-    //
+    public function like(Article $article)
+    {
+        $article->increment('likes');
+        return redirect()->back();
+    }
 }

@@ -39,4 +39,5 @@ Route::get('/{user}', [PublicController::class, 'index'])->name('public.index');
 Route::get('/{user}/{article}', [PublicController::class, 'show'])->name('public.show');
 // route comment store
 Route::post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
+Route::post('/articles/{article}/like', [PublicController::class, 'like'])->name('article.like');
 
