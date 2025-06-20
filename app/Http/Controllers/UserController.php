@@ -25,31 +25,21 @@ class UserController extends Controller
 
         // On crée l'article
         $article = Article::create($data); // $Article est l'objet article nouvellement créé
-
-        // Exemple pour ajouter la catégorie 1 à l'article
-        // $article->categories()->sync(1);
-
-        // Exemple pour ajouter des catégories à l'article
-        // $article->categories()->sync([1, 2, 3]);
-
-        // Exemple pour ajouter des catégories à l'article en venant du formulaire
-        // $article->categories()->sync($request->input('categories'));
-
-        // On redirige l'utilisateur vers la liste des articles
+        // on vérifie si l'utilisateur a sélectionné des catégories
+        // et on les associe à l'article
+        // On associe les catégories à l'article
+        // On vérifie si l'utilisateur a sélectionné des catégories
+        // et on les associe à l'article
+        // On utilise la méthode sync pour synchroniser les catégories
+        // avec l'article. Cela va ajouter les catégories sélectionnées
+        // et supprimer celles qui ne sont pas sélectionnées.
+        if ($request->has('categories')) {
+            $article->categories()->sync($request->input('categories'));
+        }
         return redirect()->route('dashboard');
     }
 
-    // public function index()
-    // {
-    //     // On récupère l'utilisateur connecté.
-    //     $user = Auth::user();
-    //     $articles = Article::where('user_id', $user->id)->get();
 
-    //     // On retourne la vue.
-    //     return view('dashboard', [
-    //         'articles' => $articles
-    //     ]);
-    // }
 
     public function index()
     {
@@ -93,7 +83,12 @@ class UserController extends Controller
 
         // On met à jour l'article
         $article->update($data);
-
+        // Mise à jour des catégories
+        if ($request->has('categories')) {
+            $article->categories()->sync($request->input('categories'));
+        } else {
+            $article->categories()->sync([]); // aucune catégorie sélectionnée
+        }
         // On redirige l'utilisateur vers la liste des articles (avec un flash)
         return redirect()->route('dashboard')->with('success', 'Article mis à jour !');
     }
@@ -104,7 +99,10 @@ class UserController extends Controller
         if ($article->user_id !== Auth::user()->id) {
             abort(403);
         }
-
+        // Suppression des commentaires liés à l'article
+        $article->comments()->delete();
+        // Suppression des liens avec les catégories
+        $article->categories()->detach();
         // Suppression d'un article
         $article->delete();
         // On redirige l'utilisateur vers la liste des articles (avec un flash)
