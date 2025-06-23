@@ -30,13 +30,13 @@
                 </div>
                 <div class="mb-2">
                     @foreach ($article->categories as $category)
-                        <span class="text-xs text-indigo-600 mr-1">#{{ $category->name }}</span>
+                        <span class="text-xs text-black mr-1 bg-gray-300 px-4 py-2 inline-block rounded-full font-bold">#{{ $category->name }}</span>
                     @endforeach
                 </div>
                 <p class="text-gray-700 mb-4">{{ substr($article->content, 0, 30) }}...</p>
                 <div class="flex justify-end space-x-2 mt-4">
                     <a href="{{ route('articles.edit', $article->id) }}"
-                        class="inline-block px-4 py-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold rounded shadow hover:from-indigo-600 hover:to-pink-600 transition duration-200">
+                        class="inline-block px-4 py-2 bg-blue-600 text-white font-semibold rounded shadow hover:from-indigo-600 hover:to-pink-600 transition duration-200">
                         ✏️ Modifier
                     </a>
                     <form id="delete-form-{{ $article->id }}" action="{{ route('articles.remove', $article->id) }}"
