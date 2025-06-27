@@ -24,7 +24,17 @@
     @foreach ($articles as $article)
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4">
             <div class="p-6 text-gray-900">
-                <h2 class="text-2xl font-bold mb-2">{{ $article->title }}</h2>
+                <h2 class="text-2xl font-bold mb-2">
+                    {{ $article->title }}
+                    @if($article->draft)
+                        <span class="ml-2 inline-flex items-center px-2 py-1 bg-yellow-200 text-yellow-900 text-xs font-semibold rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Brouillon
+                        </span>
+                    @endif
+                </h2>
                 <div class="text-sm text-gray-500 mb-1">
                     Créé le {{ $article->created_at->format('d/m/Y') }}
                 </div>

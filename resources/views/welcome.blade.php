@@ -1519,7 +1519,8 @@
     @endif
 </head>
 
-<body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
+<body
+    class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
     <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
         @if (Route::has('login'))
             <nav class="flex items-center justify-end gap-4">
@@ -1544,47 +1545,54 @@
             </nav>
         @endif
     </header>
+
+
     <!-- Articles les plus likés -->
+
+
+
     <div class="w-full max-w-2xl mx-auto mt-8">
         <h2 class="text-2xl font-bold mb-6 text-center text-indigo-700">Articles les plus likés</h2>
         @php
             $topArticles = \App\Models\Article::where('draft', 0)->orderByDesc('likes')->take(5)->get();
         @endphp
         @forelse ($topArticles as $article)
-            <div class="mb-6 p-4 bg-white dark:bg-gray-800 rounded shadow">
-                <div class="flex justify-between items-center mb-2">
-                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">{{ $article->title }}</h3>
-                    <span class="text-pink-600 font-bold flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path fill-rule="evenodd"
-                                d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61"
-                                clip-rule="evenodd" />
-                        </svg>
-                        {{ $article->likes }}
-                    </span>
-                </div>
-                <div class="text-gray-600 dark:text-gray-300 mb-2">
-                    Publié le {{ $article->created_at->format('d/m/Y') }} par <span
-                        class="font-semibold">{{ $article->user->name }}</span>
-                </div>
+
+                <div class="mb-6 p-4 bg-white dark:bg-gray-800 rounded shadow">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">{{ $article->title }}</h3>
+                        <span class="text-pink-600 font-bold flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            {{ $article->likes }}
+                        </span>
+                    </div>
+                    <div class="text-gray-600 dark:text-gray-300 mb-2">
+                        Publié le {{ $article->created_at->format('d/m/Y') }} par <span
+                            class="font-semibold">{{ $article->user->name }}</span>
+                    </div>
 
 
-                <div class="mb-2">
-                    @foreach ($article->categories as $category)
-                        <span
-                            class="text-xs text-black mr-1 bg-gray-300 px-4 py-2 inline-block rounded-full font-bold">#{{ $category->name }}</span>
-                    @endforeach
-                </div>
+                    <div class="mb-2">
+                        @foreach ($article->categories as $category)
+                            <span
+                                class="text-xs text-black mr-1 bg-gray-300 px-4 py-2 inline-block rounded-full font-bold">#{{ $category->name }}</span>
+                        @endforeach
+                    </div>
 
-                <div class="text-gray-800 dark:text-gray-100 mb-2">
-                    {{ Str::limit($article->content, 100) }}
+                    <div class="text-gray-800 dark:text-gray-100 mb-2">
+                        {{ Str::limit($article->content, 100) }}
+                    </div>
+                    <a href="{{ route('public.show', [$article->user->id, $article->id]) }}"
+                        class="text-indigo-600 hover:underline font-semibold">Lire la suite</a>
                 </div>
-                <a href="{{ route('public.show', [$article->user->id, $article->id]) }}"
-                    class="text-indigo-600 hover:underline font-semibold">Lire la suite</a>
-            </div>
-        @empty
-            <div class="text-center text-gray-500 dark:text-gray-400">Aucun article populaire pour le moment.</div>
+                @empty
+                <div class="text-center text-gray-500 dark:text-gray-400">Aucun article populaire pour le moment.</div>
+
         @endforelse
     </div>
 
